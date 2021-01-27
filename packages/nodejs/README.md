@@ -16,18 +16,18 @@
 │       │       ├── libdl.so.2
 │       │       ├── libgcc_s.so.1
 │       │       ├── libm.so.6
-│       │       ├── `libnss_dns.so.2`
-│       │       ├── `libnss_files.so.2`
+│       │       ├── libnss_dns.so.2
+│       │       ├── libnss_files.so.2
 │       │       ├── libpthread.so.0
-│       │       └── `libresolv.so.2`
+│       │       └── libresolv.so.2
 │       ├── lib64
-│       │   └── `ld-linux-x86-64.so.2`
+│       │   └── ld-linux-x86-64.so.2
 │       ├── proc
 │       │   └── meminfo
 │       └── usr
 │           └── lib
 │               └── x86_64-linux-gnu
-│                   └── `libstdc++.so.6`
+│                   └── libstdc++.so.6
 ```
 
 * pack this tree into `node_v14.2.0.tar.gz`
