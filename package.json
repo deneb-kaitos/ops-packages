@@ -1,0 +1,33 @@
+{
+  "name": "@deneb-kaitos/ops-packages",
+  "version": "0.0.0",
+  "description": "OPS packages",
+  "engines": {
+    "node": "=15.7.0",
+    "pnpm": "=5.16.0"
+  },
+  "engineStrict": true,
+  "volta": {
+    "node": "15.7.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/deneb-kaitos/ops-packages.git"
+  },
+  "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/deneb-kaitos/ops-packages/issues"
+  },
+  "homepage": "https://github.com/deneb-kaitos/ops-packages#readme",
+  "devDependencies": {
+    "@babel/core": "^7.12.10",
+    "@babel/eslint-parser": "^7.12.1",
+    "@babel/preset-env": "^7.12.11",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.17.0"
+  }
+}
