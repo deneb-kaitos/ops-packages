@@ -1,0 +1,14 @@
+#!/bin/bash
+
+NODE_VERSION=15.7.0
+EXPORT_PATH="$(pwd)/packages/nodejs/archive"
+
+rm -rf $EXPORT_PATH/* || true && mkdir $EXPORT_PATH > /dev/null 2>&1
+
+docker build --tag nodejs:$NODE_VERSION --file ./packages/nodejs/NodeJS.Dockerfile . > /dev/null 2>&1
+
+CONTAINER_ID=$(docker run --detach nodejs:$NODE_VERSION)
+
+docker cp $CONTAINER_ID:/home/builder/node_v$NODE_VERSION.tar.gz $EXPORT_PATH > /dev/null 2>&1
+docker stop $CONTAINER_ID > /dev/null 2>&1
+docker rm $CONTAINER_ID > /dev/null 2>&1
