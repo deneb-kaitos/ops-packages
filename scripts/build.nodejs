@@ -1,5 +1,6 @@
 #!/bin/bash
 
+NODE=$(which node)
 NODE_VERSION=$(sed -e "s/v//" <<< $(node --version))
 
 sed "s/%NODE_VERSION/$NODE_VERSION/g" ./packages/nodejs/files/package.manifest.template > ./packages/nodejs/files/package.manifest
@@ -17,3 +18,27 @@ docker cp $CONTAINER_ID:/home/builder/node_v$NODE_VERSION.tar.gz $EXPORT_PATH > 
 docker stop $CONTAINER_ID > /dev/null 2>&1
 docker rm $CONTAINER_ID > /dev/null 2>&1
 rm -f ./packages/nodejs/files/package.manifest
+
+gsutil cp gs://packagehub/manifest.json ./packages
+
+SHASUM=`IFS=" " read sum filename <<< $(shasum -a 256 ./packages/nodejs/archive/node_v$NODE_VERSION.tar.gz); echo $sum`
+
+cp ./packages/nodejs/files/manifest.contents.template ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
+sed -i "s/%NODE_VERSION/$NODE_VERSION/g" ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
+sed -i "s/%SHA256/$SHASUM/g" ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
+
+cp $HOME/.ops/packages/manifest.json $HOME/.ops/local_packages/manifest.json
+
+rm -rf $HOME/.ops/local_packages/node_v$NODE_VERSION
+
+$NODE ./helpers/update-manifest.mjs \
+  --manifest=$HOME/.ops/local_packages/manifest.json \
+  --definition=./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
+
+rm -f ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
+
+# gsutil cp ./packages/nodejs/archive/node_v$NODE_VERSION.tar.gz gs://packagehub/node_v$NODE_VERSION.tar.gz
+# gsutil -D setacl public-read gs://packagehub/node_v$NODE_VERSION.tar.gz
+# gsutil -D setacl public-read gs://packagehub/manifest.json
+
+tar -xzf ./packages/nodejs/archive/node_v$NODE_VERSION.tar.gz -C $HOME/.ops/local_packages
