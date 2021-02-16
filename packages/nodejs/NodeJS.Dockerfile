@@ -54,5 +54,5 @@ COPY packages/nodejs/files/package.manifest ./node_v$node_version/
 FROM copy-package-files AS archive-package
 ARG node_version
 WORKDIR /home/builder
-RUN tar -zcvf node_v$node_version.tar.gz ./node_v$node_version/ \
+RUN tar -czvf node_v$node_version.tar.gz ./node_v$node_version/ \
     && rm -rf ./node_v$node_version

@@ -1,0 +1,9 @@
+{
+  "node_v%NODE_VERSION": {
+    "language": "javascript",
+    "runtime": "node",
+    "version": "%NODE_VERSION",
+    "description": "NodeJS %NODE_VERSION",
+    "sha256": "%SHA256"
+  }
+}
