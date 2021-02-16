@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo codesign -s - --entitlements ./fix/app.entitlement --force $(which qemu-system-x86_64)
