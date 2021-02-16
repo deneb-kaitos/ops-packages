@@ -37,6 +37,7 @@ RUN mkdir -p node_v15.8.0/sysroot/{lib/x86_64-linux-gnu,lib64,proc,usr/lib/x86_6
 FROM create-package-layout AS copy-package-files
 ARG node_version
 WORKDIR /home/builder
+
 RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libdl.so.2 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libgcc_s.so.1 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
@@ -45,9 +46,12 @@ RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-
     && cp /lib/x86_64-linux-gnu/libnss_files.so.2 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libpthread.so.0 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libresolv.so.2 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
+    && cp /lib/x86_64-linux-gnu/librt.so.1 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/ld-linux-x86-64.so.2 ./node_v$node_version/sysroot/lib64/ \
     && cp /proc/meminfo ./node_v$node_version/sysroot/proc/ \
     && cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
+    && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
+    && cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
     && cp ~/.volta/bin/node ./node_v$node_version/
 COPY packages/nodejs/files/package.manifest ./node_v$node_version/
 
