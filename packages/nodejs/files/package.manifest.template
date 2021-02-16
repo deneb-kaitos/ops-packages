@@ -1,0 +1,5 @@
+{
+   "Program":"node_v%NODE_VERSION/node",
+   "Args" : ["node"],
+   "Version":"%NODE_VERSION"
+}

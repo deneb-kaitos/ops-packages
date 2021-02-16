@@ -1,4 +1,5 @@
 ARG DEBIAN_FRONTEND=noninteractive
+ARG node_version
 
 FROM debian:buster-slim AS os-base
 SHELL ["/bin/bash", "-c"]
@@ -24,17 +25,17 @@ USER builder
 RUN curl --anyauth --progress-bar --http2 --retry 0 --tcp-fastopen https://get.volta.sh | /bin/bash
 
 FROM install-volta AS install-node
-ARG node_version=15.7.0
+ARG node_version
 ENV PATH=~/.volta/bin/node:~/.volta/bin:$PATH
 RUN volta install node@$node_version
 
 FROM install-node AS create-package-layout
-ARG node_version=15.7.0
+ARG node_version
 WORKDIR /home/builder
-RUN mkdir -p node_v15.7.0/sysroot/{lib/x86_64-linux-gnu,lib64,proc,usr/lib/x86_64-linux-gnu}
+RUN mkdir -p node_v15.8.0/sysroot/{lib/x86_64-linux-gnu,lib64,proc,usr/lib/x86_64-linux-gnu}
 
 FROM create-package-layout AS copy-package-files
-ARG node_version=15.7.0
+ARG node_version
 WORKDIR /home/builder
 RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libdl.so.2 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
@@ -51,7 +52,7 @@ RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-
 COPY packages/nodejs/files/package.manifest ./node_v$node_version/
 
 FROM copy-package-files AS archive-package
-ARG node_version=15.7.0
+ARG node_version
 WORKDIR /home/builder
 RUN tar -zcvf node_v$node_version.tar.gz ./node_v$node_version/ \
     && rm -rf ./node_v$node_version
