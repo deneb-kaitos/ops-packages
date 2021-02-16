@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# docker run -it fb5d733235d9 /bin/bash
+
+cd ./packages/nodejs/test/ \
+  && ops pkg load --local node_v15.8.0 --port 8083 --force --args ./hi.mjs --accel hvf
