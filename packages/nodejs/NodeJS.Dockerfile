@@ -20,24 +20,19 @@ RUN useradd \
     --shell /bin/bash \
     builder
 
-FROM add-builder-user AS install-volta
-USER builder
-RUN curl --anyauth --progress-bar --http2 --retry 0 --tcp-fastopen https://get.volta.sh | /bin/bash
-
-FROM install-volta AS install-node
-ARG node_version
-ENV PATH=~/.volta/bin/node:~/.volta/bin:$PATH
-RUN volta install node@$node_version
-
-FROM install-node AS create-package-layout
+FROM add-builder-user AS install-node
 ARG node_version
 WORKDIR /home/builder
-RUN mkdir -p node_v15.8.0/sysroot/{lib/x86_64-linux-gnu,lib64,proc,usr/lib/x86_64-linux-gnu}
+RUN mkdir -p node_v$node_version/sysroot/{lib/x86_64-linux-gnu,lib64,proc,usr/lib/x86_64-linux-gnu} \
+    && curl -O https://nodejs.org/dist/v$node_version/node-v$node_version-linux-x64.tar.gz \
+    && tar -xzf node-v$node_version-linux-x64.tar.gz \
+    && cp node-v$node_version-linux-x64/bin/node ./node_v$node_version/ \
+    && rm -rf node-v$node_version-linux-x64 \
+    && rm -f node-v$node_version-linux-x64.tar.gz
 
-FROM create-package-layout AS copy-package-files
+FROM install-node AS copy-package-files
 ARG node_version
 WORKDIR /home/builder
-
 RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libdl.so.2 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
     && cp /lib/x86_64-linux-gnu/libgcc_s.so.1 ./node_v$node_version/sysroot/lib/x86_64-linux-gnu/ \
@@ -51,8 +46,7 @@ RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-
     && cp /proc/meminfo ./node_v$node_version/sysroot/proc/ \
     && cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
-    && cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
-    && cp ~/.volta/bin/node ./node_v$node_version/
+    && cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/
 COPY packages/nodejs/files/package.manifest ./node_v$node_version/
 
 FROM copy-package-files AS archive-package
