@@ -1,0 +1,25 @@
+{
+  "Args": [
+    "__sapper__/build/index.js"
+  ],
+  "Dirs": [
+    "./node_modules",
+    "./tests/node/no-dependencies/src/__sapper__/build"
+  ],
+  "Env": {
+    "NODE_DEBUG": "*"
+  },
+  "NameServer": "192.168.2.1",
+  "RebootOnExit": true,
+  "RunConfig": {
+    "Bridged": false,
+    "Memory": "100M",
+    "Ports": [
+      "3000"
+    ],
+    "Verbose": true,
+    "ShowDebug": true,
+    "ShowErrors": true,
+    "ShowWarnings": true
+  }
+}

@@ -1,0 +1,10 @@
+#!/bin/bash
+
+ops image create \
+  --config ./tests/node/no-dependencies/config.json \
+  --local \
+  --package node_v15.8.0 \
+  --imagename sapper \
+  --target-cloud onprem
+
+# ops instance create sapper.img --imagename sapper --port 3000 --target-cloud onprem --show-debug --show-errors --show-warnings
