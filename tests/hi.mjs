@@ -1,6 +1,4 @@
-import {
-  http,
-} from 'http';
+import http from 'http';
 
 http.createServer((req, res) => {
   res.writeHead(200, {
