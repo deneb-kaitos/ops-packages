@@ -5,12 +5,12 @@ NODE_VERSION=$(sed -e "s/v//" <<< $(node --version))
 
 sed "s/%NODE_VERSION/$NODE_VERSION/g" ./packages/nodejs/files/package.manifest.template > ./packages/nodejs/files/package.manifest
 
-EXPORT_PATH="$(pwd)/packages/nodejs/archive"
+EXPORT_PATH="$(pwd)/releases/nodejs"
 
 rm -rf $EXPORT_PATH/* || true && mkdir $EXPORT_PATH > /dev/null 2>&1
 
 
-docker build --build-arg node_version=$NODE_VERSION --tag nodejs:$NODE_VERSION --file ./packages/nodejs/NodeJS.Dockerfile .
+docker build --build-arg node_version=$NODE_VERSION --tag nodejs:$NODE_VERSION --file ./packages/nodejs/build.Dockerfile .
 
 CONTAINER_ID=$(docker run --detach nodejs:$NODE_VERSION)
 
@@ -21,7 +21,7 @@ rm -f ./packages/nodejs/files/package.manifest
 
 gsutil cp gs://packagehub/manifest.json ./packages
 
-SHASUM=`IFS=" " read sum filename <<< $(shasum -a 256 ./packages/nodejs/archive/node_v$NODE_VERSION.tar.gz); echo $sum`
+SHASUM=`IFS=" " read sum filename <<< $(shasum -a 256 $EXPORT_PATH/node_v$NODE_VERSION.tar.gz); echo $sum`
 
 cp ./packages/nodejs/files/manifest.contents.template ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
 sed -i "s/%NODE_VERSION/$NODE_VERSION/g" ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
@@ -41,4 +41,4 @@ rm -f ./packages/nodejs/files/node_v$NODE_VERSION.manifest.definition
 # gsutil -D setacl public-read gs://packagehub/node_v$NODE_VERSION.tar.gz
 # gsutil -D setacl public-read gs://packagehub/manifest.json
 
-tar -xzf ./packages/nodejs/archive/node_v$NODE_VERSION.tar.gz -C $HOME/.ops/local_packages
+tar -xzf $EXPORT_PATH/node_v$NODE_VERSION.tar.gz -C $HOME/.ops/local_packages
