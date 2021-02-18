@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd tests/node/no-dependencies/src && pnpm run build
+
 ops image create \
   --config ./tests/node/no-dependencies/config.json \
   --local \

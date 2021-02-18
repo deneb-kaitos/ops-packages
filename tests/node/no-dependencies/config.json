@@ -4,7 +4,8 @@
   ],
   "Dirs": [
     "./node_modules",
-    "./tests/node/no-dependencies/src/__sapper__/build"
+    "./tests/node/no-dependencies/src",
+    "/Users/dmitrymedvedev/.pnpm-store/v3"
   ],
   "Env": {
     "NODE_DEBUG": "*"
