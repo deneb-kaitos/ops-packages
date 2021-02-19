@@ -1,10 +1,8 @@
 /* eslint-disable node/no-missing-import, import/no-unresolved */
 
 import {
-  debuglog,
   inspect,
 } from 'util';
-import which from 'which';
 import {
   resolve,
 } from 'path';
