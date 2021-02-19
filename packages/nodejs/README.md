@@ -6,7 +6,7 @@
 * find the following files in the Docker image:
 
 ```bash
-├── node_v15.8.0
+├── node_v15.9.0
 │   ├── node
 │   ├── package.manifest
 │   └── sysroot
@@ -30,5 +30,5 @@
 │                   └── libstdc++.so.6
 ```
 
-* pack this tree into `node_v15.8.0.tar.gz`
-* retrieve the `node_v15.8.0.tar.gz` to the host system.
+* pack this tree into `node_v15.9.0.tar.gz`
+* retrieve the `node_v15.9.0.tar.gz` to the host system.
