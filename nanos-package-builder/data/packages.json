@@ -1,0 +1,7 @@
+{
+  "nodejs": {
+    "versions": {
+      "url": "https://nodejs.org/dist/index.json"
+    }
+  }
+}

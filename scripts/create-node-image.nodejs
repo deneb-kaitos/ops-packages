@@ -5,7 +5,7 @@ cd tests/node/no-dependencies/src && pnpm run build
 ops image create \
   --config ./tests/node/no-dependencies/config.json \
   --local \
-  --package node_v15.8.0 \
+  --package node_v15.9.0 \
   --imagename sapper \
   --target-cloud onprem
 
