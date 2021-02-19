@@ -3,9 +3,6 @@
 import {
   inspect,
 } from 'util';
-import {
-  resolve,
-} from 'path';
 import chalk from 'chalk';
 import {
   rmdir,
