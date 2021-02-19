@@ -5,7 +5,7 @@ import {
   realpath,
 } from 'fs/promises';
 
-const PACKAGE_JSON = 'package.json';
+const PACKAGE_JSON = new URL('../../package.json', import.meta.url).pathname;
 let packageJsonPath = null;
 let version = null;
 

@@ -1,12 +1,13 @@
 {
-  "name": "@deneb-kaitos/nanos-package-builder",
-  "version": "0.0.6",
+  "name": "nanos-package-builder",
+  "version": "0.0.8",
   "description": "nanos package builder",
   "keywords": [
     "nanovms",
     "nanos",
     "package builder"
   ],
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
@@ -33,7 +34,10 @@
   "scripts": {
     "lint": "./node_modules/.bin/eslint ./ --ext .mjs",
     "test": "pnpm run lint && cross-env NODE_ENV=test NODE_DEBUG=npbuild*,LibCLI ./node_modules/.bin/c8 ./node_modules/.bin/mocha -- --trace-warnings",
-    "coverage": "./node_modules/.bin/c8 report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov --disable=gcov"
+    "coverage": "./node_modules/.bin/c8 report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov --disable=gcov",
+    "postinstall": "cd .. && husky install ./nanos-package-builder/.husky",
+    "prepublishOnly": "pinst --disable",
+    "postpublish": "pinst --enable"
   },
   "dependencies": {
     "chalk": "^4.1.0",

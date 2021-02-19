@@ -47,7 +47,7 @@ RUN cp /lib/x86_64-linux-gnu/libc.so.6 ./node_v$node_version/sysroot/lib/x86_64-
     && cp /usr/lib/x86_64-linux-gnu/libstdc++.so.6 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
     && cp /usr/lib/x86_64-linux-gnu/libssl.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/ \
     && cp /usr/lib/x86_64-linux-gnu/libcrypto.so.1.1 ./node_v$node_version/sysroot/usr/lib/x86_64-linux-gnu/
-COPY ./configs/nodejs/files/package.manifest ./node_v$node_version/
+COPY ./package.manifest ./node_v$node_version/
 
 FROM copy-package-files AS archive-package
 ARG node_version

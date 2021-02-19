@@ -38,7 +38,7 @@ const context = async (version = null, debuglog = null) => ({
     tools: (await tools(debuglog)),
     paths: {
       tmp: (await mkdtemp()),
-      out: resolve('../releases/nodejs'),
+      out: process.cwd(),
     },
   },
 });
