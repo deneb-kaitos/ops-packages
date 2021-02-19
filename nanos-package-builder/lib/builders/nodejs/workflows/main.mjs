@@ -1,7 +1,4 @@
 import {
-  resolve,
-} from 'path';
-import {
   Machine,
   interpret,
   assign,
