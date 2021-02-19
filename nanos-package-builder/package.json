@@ -1,6 +1,6 @@
 {
   "name": "nanos-package-builder",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "nanos package builder",
   "keywords": [
     "nanovms",
