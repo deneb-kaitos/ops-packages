@@ -4,30 +4,53 @@ import {
 import {
   Machine,
   interpret,
+  assign,
 } from 'xstate';
+
+export const initialContext = {
+  result: {
+    success: {
+      output_path: resolve('releases/nodejs/node_v15.8.0.tar.gz'),
+    },
+    error: {
+      items: [
+        new Error('not implemented yet'),
+      ],
+    },
+  },
+};
 
 const machine = Machine({
   id: 'nodejs-builder',
   initial: 'initial',
-  context: {
-    result: {
-      success: {
-        output_path: resolve('releases/nodejs/node_v15.8.0.tar.gz'),
-      },
-      error: {
-        items: [
-          new Error('build failed'),
-        ],
-      },
-    },
-  },
+  context: initialContext,
   states: {
     initial: {
+      entry: ['logCtx'],
       always: [
         {
-          target: 'buildFailed',
+          target: 'checkDockerIsRunning',
         },
       ],
+    },
+    checkDockerIsRunning: {
+      invoke: {
+        id: 'isDockerIsRunning',
+        src: 'isDockerIsRunning',
+        onDone: {
+          target: 'buildSucceeded',
+        },
+        onError: {
+          target: 'buildFailed',
+          actions: assign((context, event) => ({
+            result: {
+              error: {
+                items: [event.data],
+              },
+            },
+          })),
+        },
+      },
     },
     buildSucceeded: {
       type: 'final',
@@ -46,4 +69,4 @@ const machine = Machine({
   },
 });
 
-export const builder = (config = null) => interpret(machine.withConfig(config));
+export const builder = (context = null, config = null) => interpret(machine.withConfig(config).withContext(context));
