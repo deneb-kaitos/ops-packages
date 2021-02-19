@@ -1,5 +1,6 @@
 {
   "name": "@deneb-kaitos/nanos-package-builder",
+
   "version": "0.0.7",
   "description": "nanos package builder",
   "keywords": [
