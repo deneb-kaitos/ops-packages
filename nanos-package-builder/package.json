@@ -3,11 +3,20 @@
   "version": "0.0.4",
   "description": "nanos package builder",
   "keywords": [
+    "nanovms",
     "nanos",
     "package builder"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
+  "homepage": "https://github.com/deneb-kaitos/ops-packages/tree/main/nanos-package-builder",
+  "bugs": {
+    "email": "dmitry.medvedev@gmail.com",
+    "url": "https://github.com/deneb-kaitos/ops-packages/issues"
+  },
   "engines": {
     "node": "=15.9.0",
     "pnpm": "=5.17.2"
