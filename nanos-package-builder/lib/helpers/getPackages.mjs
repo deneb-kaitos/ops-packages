@@ -4,7 +4,8 @@ import {
   readFile,
 } from 'fs/promises';
 
-const PACKAGES_JSON = './data/packages.json';
+const PACKAGES_JSON = (new URL('../../data/packages.json', import.meta.url)).pathname;
+
 let packages = null;
 
 export const getPackages = async (debuglog = null) => {

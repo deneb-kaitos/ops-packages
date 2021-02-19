@@ -10,8 +10,9 @@ import {
 } from 'fs/promises';
 
 const files = Object.freeze({
-  packageManifest: resolve('./configs/nodejs/files/package.manifest'),
-  dockerFile: resolve('./configs/nodejs/docker/build.Dockerfile'),
+  packageManifest: resolve(process.cwd(), './package.manifest'),
+  // dockerFile: (new URL('./configs/nodejs/docker/build.Dockerfile', import.meta.url)).pathname,
+  dockerFile: (new URL('../../../../configs/nodejs/docker/build.Dockerfile', import.meta.url)).pathname,
 });
 
 /**
