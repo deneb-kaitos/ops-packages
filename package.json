@@ -28,6 +28,8 @@
     "@babel/eslint-parser": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "cross-env": "^7.0.3",
-    "eslint": "^7.17.0"
+    "eslint": "^7.17.0",
+    "husky": "^5.0.9",
+    "pinst": "^2.1.4"
   }
 }
