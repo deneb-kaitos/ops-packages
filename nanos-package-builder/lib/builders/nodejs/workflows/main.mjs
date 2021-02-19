@@ -10,12 +10,10 @@ import {
 export const initialContext = {
   result: {
     success: {
-      output_path: resolve('releases/nodejs/node_v15.8.0.tar.gz'),
+      package: null,
     },
     error: {
-      items: [
-        new Error('not implemented yet'),
-      ],
+      items: [],
     },
   },
 };
@@ -26,10 +24,37 @@ const machine = Machine({
   context: initialContext,
   states: {
     initial: {
-      entry: ['logCtx'],
       always: [
         {
           target: 'checkDockerIsRunning',
+          cond: 'isAllRequiredToolsPresent',
+        },
+        {
+          target: 'enumerateMissingTools',
+        },
+      ],
+    },
+    enumerateMissingTools: {
+      entry: assign((context) => {
+        const errors = [];
+
+        for (const [toolName, toolPath] of Object.entries(context.tools)) {
+          if (toolPath === null) {
+            errors.push(new ReferenceError(`required tool is missing: ${toolName}`));
+          }
+        }
+
+        return {
+          result: {
+            error: {
+              items: errors.slice(),
+            },
+          },
+        };
+      }),
+      always: [
+        {
+          target: 'buildFailed',
         },
       ],
     },
@@ -38,7 +63,35 @@ const machine = Machine({
         id: 'isDockerIsRunning',
         src: 'isDockerIsRunning',
         onDone: {
+          target: 'build',
+        },
+        onError: {
+          target: 'buildFailed',
+          actions: assign((context, event) => ({
+            result: {
+              error: {
+                items: [event.data],
+              },
+            },
+          })),
+        },
+      },
+    },
+    build: {
+      invoke: {
+        id: 'buildService',
+        src: 'buildService',
+        onDone: {
           target: 'buildSucceeded',
+          actions: [
+            assign((context, event) => ({
+              result: {
+                success: {
+                  package: event.data,
+                },
+              },
+            })),
+          ],
         },
         onError: {
           target: 'buildFailed',

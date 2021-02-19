@@ -1,5 +1,9 @@
 /* eslint-disable node/no-missing-import, import/no-unresolved */
 
+import {
+  debuglog,
+  inspect,
+} from 'util';
 import which from 'which';
 import {
   resolve,
@@ -21,35 +25,50 @@ import {
 import {
   isDockerIsRunning,
 } from '../helpers/isDockerIsRunning.mjs';
+import {
+  buildService,
+} from './services/buildService.mjs';
+import {
+  tools,
+} from '../helpers/tools.mjs';
 
 // eslint-disable-next-line no-unused-vars
 const context = async (version = null, debuglog = null) => ({
   ...initialContext,
   ...{
     version,
-    commands: {
-      // FIXME: not handling 'not found' case
-      docker: (await which('docker')),
-      // FIXME: not handling 'not found' case
-      gsutil: (await which('gsutil')),
-    },
+    tools: (await tools(debuglog)),
     paths: {
       tmp: (await mkdtemp()),
-      out: resolve('releases/nodejs'),
+      out: resolve('../releases/nodejs'),
     },
   },
 });
 const config = {
   actions: {
     logCtx: (ctx) => {
-      log(chalk`{cyan ctx}:`, ctx);
+      log(chalk`{cyan ctx}:`, inspect(ctx, {
+        depth: null,
+        compact: false,
+      }));
     },
   },
   activities: {},
   delays: {},
-  guards: {},
+  guards: {
+    isAllRequiredToolsPresent: (ctx) => {
+      for (const toolPath of Object.values(ctx.tools)) {
+        if (toolPath === null) {
+          return false;
+        }
+      }
+
+      return true;
+    },
+  },
   services: {
     isDockerIsRunning,
+    buildService,
   },
 };
 
