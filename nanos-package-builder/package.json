@@ -37,7 +37,8 @@
     "coverage": "./node_modules/.bin/c8 report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov --disable=gcov",
     "postinstall": "cd .. && husky install ./nanos-package-builder/.husky",
     "prepublishOnly": "pinst --disable",
-    "postpublish": "pinst --enable"
+    "postpublish": "pinst --enable",
+    "release": "standard-version"
   },
   "husky": {
     "hooks": {
@@ -67,7 +68,8 @@
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-node": "^11.1.0",
     "mocha": "^8.3.0",
-    "nanos-package-builder": "link:"
+    "nanos-package-builder": "link:",
+    "standard-version": "^9.1.1"
   },
   "mocha": {
     "allow-uncaught": false,
