@@ -36,6 +36,7 @@ importers:
       commander: 7.1.0
       execa: 5.0.0
       got: 11.8.1
+      nanoid: 3.1.20
       which: 2.0.2
       xstate: 4.16.2
     devDependencies:
@@ -66,6 +67,7 @@ importers:
       execa: ^5.0.0
       got: ^11.8.1
       mocha: ^8.3.0
+      nanoid: ^3.1.20
       which: ^2.0.2
       xstate: ^4.16.2
   packages/nodejs:
@@ -3275,7 +3277,6 @@ packages:
     resolution:
       integrity: sha512-1qstj9z5+x491jfiC4Nelk+f8XBad7LN20PmyWINJEMRSf3wcAjAWysw1qaA8z6NSKe2sjq1hRSDpBH5paCb6A==
   /nanoid/3.1.20:
-    dev: true
     engines:
       node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1
     hasBin: true
