@@ -24,14 +24,18 @@ import {
   buildService,
 } from './services/buildService.mjs';
 import {
+  installService,
+} from './services/installService.mjs';
+import {
   tools,
 } from '../helpers/tools.mjs';
 
 // eslint-disable-next-line no-unused-vars
-const context = async (version = null, outputDirectory = null, debuglog = null) => ({
+const context = async (version = null, outputDirectory = null, install = false, debuglog = null) => ({
   ...initialContext,
   ...{
     version,
+    install,
     tools: (await tools(debuglog)),
     paths: {
       tmp: (await mkdtemp()),
@@ -60,18 +64,20 @@ const config = {
 
       return true;
     },
+    isInstallationRequested: (ctx) => ctx.install,
   },
   services: {
     isDockerIsRunning,
     buildService,
+    installService,
   },
 };
 
-export const build = async (version = null, outputDirectory, debuglog = null) => {
+export const build = async (version = null, outputDirectory = null, install = false, debuglog = null) => {
   const normalizedVersion = version.slice(1);
-  const ctx = await context(normalizedVersion, outputDirectory, debuglog);
+  const ctx = await context(normalizedVersion, outputDirectory, install, debuglog);
 
-  log(chalk`{grey building nodejs ${version}}`);
+  log(chalk`{grey building ${install === true ? 'and installing' : ''} nodejs ${version}}`);
 
   const doBuild = () => new Promise((succeed) => {
     builder(ctx, config)
