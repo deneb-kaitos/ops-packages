@@ -10,10 +10,13 @@ import {
 import {
   log,
 } from '../../../helpers/log.mjs';
+import {
+  debuglog,
+} from '../../../helpers/debuglog.mjs';
 
 let command = null;
 
-const listPackages = async (debuglog = null) => {
+const listPackages = async () => {
   const packageNames = Object.keys(packages).join(', ');
   const output = `${chalk.green('packages:')} ${packageNames}`;
 
@@ -21,7 +24,7 @@ const listPackages = async (debuglog = null) => {
   log(output);
 };
 
-export const list = (debuglog = null) => {
+export const list = () => {
   if (command === null) {
     command = new Command('list');
     command

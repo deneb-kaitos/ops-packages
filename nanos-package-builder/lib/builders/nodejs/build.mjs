@@ -18,6 +18,9 @@ import {
   log,
 } from '../../helpers/log.mjs';
 import {
+  debuglog,
+} from '../../helpers/debuglog.mjs';
+import {
   isDockerIsRunning,
 } from '../helpers/isDockerIsRunning.mjs';
 import {
@@ -31,12 +34,12 @@ import {
 } from '../helpers/tools.mjs';
 
 // eslint-disable-next-line no-unused-vars
-const context = async (version = null, outputDirectory = null, install = false, debuglog = null) => ({
+const context = async (version = null, outputDirectory = null, install = false) => ({
   ...initialContext,
   ...{
     version,
     install,
-    tools: (await tools(debuglog)),
+    tools: (await tools()),
     paths: {
       tmp: (await mkdtemp()),
       out: outputDirectory ?? process.cwd(),
@@ -73,9 +76,9 @@ const config = {
   },
 };
 
-export const build = async (version = null, outputDirectory = null, install = false, debuglog = null) => {
+export const build = async (version = null, outputDirectory = null, install = false) => {
   const normalizedVersion = version.slice(1);
-  const ctx = await context(normalizedVersion, outputDirectory, install, debuglog);
+  const ctx = await context(normalizedVersion, outputDirectory, install);
 
   log(chalk`{grey building ${install === true ? 'and installing' : ''} nodejs ${version}}`);
 

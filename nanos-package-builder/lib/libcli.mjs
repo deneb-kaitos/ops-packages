@@ -1,8 +1,11 @@
-import util from 'util';
-import './constants/globals.mjs';
 import {
   Command,
 } from 'commander/esm.mjs';
+import {
+  init_debuglog,
+  debuglog,
+} from './helpers/debuglog.mjs';
+import './constants/globals.mjs';
 import {
   getVersion,
 } from './helpers/getVersion.mjs';
@@ -12,22 +15,28 @@ import {
 import {
   pkg,
 } from './commands/pkg/pkg.mjs';
+import {
+  image,
+} from './commands/image/image.mjs';
 
 export class LibCLI {
   #debuglog = null;
   #program = null;
 
   constructor() {
-    this.#debuglog = util.debuglog(this.constructor.name);
+    init_debuglog(this.constructor.name);
+
+    this.#debuglog = debuglog;
     this.#program = new Command();
   }
 
   async start() {
-    await getPackages(this.#debuglog);
+    await getPackages();
 
     this.#program
-      .version(await getVersion(this.#debuglog))
-      .addCommand(pkg(this.#debuglog));
+      .version(await getVersion())
+      .addCommand(pkg())
+      .addCommand(image());
   }
 
   async stop() {

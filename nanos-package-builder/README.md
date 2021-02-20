@@ -17,3 +17,9 @@ npbuild pkg nodejs versions
 ```bash
 npbuild pkg nodejs build v15.9.0 --output-directory ~/.ops/local_packages --install
 ```
+
+## create a nodejs image w/ a project
+
+```bash
+npbuild image create --use-package=node_v15.9.0 --image=name=kaufmann
+```
