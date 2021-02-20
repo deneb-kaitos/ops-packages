@@ -35,7 +35,7 @@
     "lint": "./node_modules/.bin/eslint ./ --ext .mjs",
     "test": "pnpm run lint && cross-env NODE_ENV=test NODE_DEBUG=npbuild*,LibCLI ./node_modules/.bin/c8 ./node_modules/.bin/mocha -- --trace-warnings",
     "coverage": "./node_modules/.bin/c8 report --reporter=text-lcov > ./coverage/coverage.lcov && ./node_modules/.bin/codecov --disable=gcov",
-    "_postinstall": "cd .. && husky install ./nanos-package-builder/.husky",
+    "postinstall": "cd .. && husky install ./nanos-package-builder/.husky",
     "prepublishOnly": "pinst --disable && pnpm run release",
     "postpublish": "pinst --enable",
     "release": "standard-version"
