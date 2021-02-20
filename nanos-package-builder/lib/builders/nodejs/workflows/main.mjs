@@ -114,11 +114,27 @@ const machine = Machine({
       ],
     },
     install: {
+      entry: ['logCtx'],
       invoke: {
         id: 'install',
         src: 'installService',
         onDone: {
           target: 'buildSucceeded',
+          actions: [
+            assign((context, event) => {
+              const r = {
+                result: {
+                  success: {
+                    ...context.result.success,
+                    installed: event.data,
+                  },
+                },
+              };
+
+              return r;
+            }),
+            'logCtx',
+          ],
         },
         onError: {
           target: 'buildFailed',

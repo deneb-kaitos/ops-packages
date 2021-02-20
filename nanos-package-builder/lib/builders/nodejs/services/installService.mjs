@@ -115,8 +115,6 @@ const utar = (tarFilePath = null) => new Promise((ok) => {
 });
 
 export const installService = async (context = null) => {
-  log(chalk`installService ${JSON.stringify(context, null, 2)}`);
-
   const opsLocalPackagesDir = join(dirname(resolve(await which('ops'), '../')), './local_packages');
   const archivePath = context.result.success.package;
 
