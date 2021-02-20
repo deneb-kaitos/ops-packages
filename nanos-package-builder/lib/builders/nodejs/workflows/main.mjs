@@ -79,7 +79,7 @@ const machine = Machine({
         id: 'buildService',
         src: 'buildService',
         onDone: {
-          target: 'buildSucceeded',
+          target: 'checkInstallationRequested',
           actions: [
             assign((context, event) => ({
               result: {
@@ -89,6 +89,36 @@ const machine = Machine({
               },
             })),
           ],
+        },
+        onError: {
+          target: 'buildFailed',
+          actions: assign((context, event) => ({
+            result: {
+              error: {
+                items: [event.data],
+              },
+            },
+          })),
+        },
+      },
+    },
+    checkInstallationRequested: {
+      always: [
+        {
+          target: 'install',
+          cond: 'isInstallationRequested',
+        },
+        {
+          target: 'buildSucceeded',
+        },
+      ],
+    },
+    install: {
+      invoke: {
+        id: 'install',
+        src: 'installService',
+        onDone: {
+          target: 'buildSucceeded',
         },
         onError: {
           target: 'buildFailed',

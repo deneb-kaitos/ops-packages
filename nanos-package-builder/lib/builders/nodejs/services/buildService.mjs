@@ -15,12 +15,6 @@ const files = Object.freeze({
   dockerFile: (new URL('../../../../configs/nodejs/docker/build.Dockerfile', import.meta.url)).pathname,
 });
 
-/**
-    docker stop $CONTAINER_ID > /dev/null 2 > & 1
-    docker rm $CONTAINER_ID > /dev/null 2 > & 1
-
- */
-
 const generatePackageManifestFile = async (version = null) => {
   const contents = {
     Program: `node_v${version}/node`,
