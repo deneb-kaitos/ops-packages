@@ -15,5 +15,5 @@ npbuild pkg nodejs versions
 ## create a specific version of the package
 
 ```bash
-npbuild pkg nodejs build v15.9.0
+npbuild pkg nodejs build v15.9.0 -o /tmp
 ```
