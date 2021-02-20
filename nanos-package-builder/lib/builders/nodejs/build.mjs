@@ -28,14 +28,14 @@ import {
 } from '../helpers/tools.mjs';
 
 // eslint-disable-next-line no-unused-vars
-const context = async (version = null, debuglog = null) => ({
+const context = async (version = null, outputDirectory = null, debuglog = null) => ({
   ...initialContext,
   ...{
     version,
     tools: (await tools(debuglog)),
     paths: {
       tmp: (await mkdtemp()),
-      out: process.cwd(),
+      out: outputDirectory ?? process.cwd(),
     },
   },
 });
@@ -67,9 +67,9 @@ const config = {
   },
 };
 
-export const build = async (version = null, debuglog = null) => {
+export const build = async (version = null, outputDirectory, debuglog = null) => {
   const normalizedVersion = version.slice(1);
-  const ctx = await context(normalizedVersion, debuglog);
+  const ctx = await context(normalizedVersion, outputDirectory, debuglog);
 
   log(chalk`{grey building nodejs ${version}}`);
 
