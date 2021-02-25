@@ -2,8 +2,11 @@ import which from 'which';
 import {
   requiredTools,
 } from '../../constants/requiredTools.mjs';
+import {
+  debuglog,
+} from '../../helpers/debuglog.mjs';
 
-const resolveTool = async (toolName = null, debuglog = null) => {
+const resolveTool = async (toolName = null) => {
   try {
     return await which(toolName);
   } catch (error) {
@@ -13,11 +16,11 @@ const resolveTool = async (toolName = null, debuglog = null) => {
   return null;
 };
 
-export const tools = async (debuglog = null) => {
+export const tools = async () => {
   const result = {};
 
   for await (const requiredTool of requiredTools) {
-    result[requiredTool] = (await resolveTool(requiredTool, debuglog));
+    result[requiredTool] = (await resolveTool(requiredTool));
   }
 
   return Object.freeze(result);

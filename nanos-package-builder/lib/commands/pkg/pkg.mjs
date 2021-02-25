@@ -10,10 +10,13 @@ import {
 import {
   buildPackageCommand,
 } from '../helpers/buildPackageCommand.mjs';
+import {
+  debuglog,
+} from '../../helpers/debuglog.mjs';
 
 let command = null;
 
-export const pkg = (debuglog = null) => {
+export const pkg = () => {
   const packageNames = Object.keys(packages);
   debuglog('pkg.packageNames:', packageNames);
 

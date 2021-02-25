@@ -5,10 +5,13 @@ import chalk from 'chalk';
 import {
   log,
 } from '../../helpers/log.mjs';
+import {
+  debuglog,
+} from '../../helpers/debuglog.mjs';
 
 let command = null;
 
-const buildPackage = async (debuglog = null, {
+const buildPackage = async ({
   packageName = null,
   version = null,
   outputDirectory = null,
@@ -21,13 +24,15 @@ const buildPackage = async (debuglog = null, {
   debuglog(message);
   log(message);
 
-  const { build } = (await import(`../../builders/${packageName}/build.mjs`));
+  const {
+    build,
+  } = (await import(`../../builders/package.builders/${packageName}/build.mjs`));
 
   // eslint-disable-next-line no-return-await
-  return await build(version, outputDirectory, install, debuglog);
+  return await build(version, outputDirectory, install);
 };
 
-export const build = (packageName = null, debuglog = null) => {
+export const build = (packageName = null) => {
   debuglog('build', packageName);
 
   if (command === null) {
@@ -38,7 +43,7 @@ export const build = (packageName = null, debuglog = null) => {
       .option('-o, --output-directory <output-directory>', 'output directory')
       .option('-i, --install', `install ${packageName} to ~/.ops/local_packages`)
       // eslint-disable-next-line no-return-await
-      .action(async (version) => await buildPackage(debuglog, {
+      .action(async (version) => await buildPackage({
         packageName,
         version,
         outputDirectory: (command.opts()).outputDirectory ?? process.cwd(),

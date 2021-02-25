@@ -5,8 +5,18 @@ cd tests/node/no-dependencies/src && pnpm run build
 ops image create \
   --config ./tests/node/no-dependencies/config.json \
   --local \
-  --package node_v15.9.0 \
+  --package node_v15.10.0 \
   --imagename sapper \
   --target-cloud onprem
 
 # ops instance create sapper.img --imagename sapper --port 3000 --target-cloud onprem --show-debug --show-errors --show-warnings
+
+# hdiutil attach -noverify -nomount kaufmann-web.img
+# diskutil list
+# diskutil mountDisk /dev/disk3
+# diskutil unmountDisk /dev/disk3
+
+
+# hdiutil attach -imagekey diskimage-class=CRawDiskImage -nomount kaufmann-web.img
+# hdiutil detach /dev/disk3
+

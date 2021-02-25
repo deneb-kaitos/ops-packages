@@ -44,8 +44,8 @@ describe('npbuild', () => {
   // eslint-disable-next-line no-return-await
   after(async () => await libCLI.stop());
 
-  it('build nodejs v15.9.0', async () => {
-    process.argv.push(...['pkg', 'nodejs', 'build', 'v15.9.0']);
+  it('build nodejs v15.10.0', async () => {
+    process.argv.push(...['pkg', 'nodejs', 'build', 'v15.10.0']);
 
     await libCLI.exec();
 

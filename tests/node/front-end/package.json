@@ -1,17 +1,16 @@
 {
-  "name": "@deneb-kaitos/ops-packages",
+  "name": "@deneb-kaitos/kaufmann-web-app",
   "version": "0.0.0",
-  "description": "OPS packages",
+  "description": "Web Application for the Kaufmann System",
   "engines": {
     "node": "=15.10.0",
     "pnpm": "=5.18.0"
   },
   "engineStrict": true,
-  "volta": {
-    "node": "15.10.0"
-  },
   "scripts": {
-    "preinstall": "npx only-allow pnpm"
+    "preinstall": "npx only-allow pnpm",
+    "build": "cd ./project-sources && pnpm run build",
+    "start": "cd ./project-sources && node __sapper__/build"
   },
   "repository": {
     "type": "git",
@@ -28,11 +27,9 @@
     "@babel/eslint-parser": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "cross-env": "^7.0.3",
-    "eslint": "^7.17.0",
-    "husky": "^5.0.9",
-    "pinst": "^2.1.4"
+    "eslint": "^7.17.0"
   },
   "dependencies": {
-    "@deneb-kaitos/ops-packages": "link:"
+    "@deneb-kaitos/kaufmann-web-app": "link:"
   }
 }

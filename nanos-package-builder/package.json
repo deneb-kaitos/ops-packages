@@ -19,12 +19,12 @@
     "url": "https://github.com/deneb-kaitos/ops-packages/issues"
   },
   "engines": {
-    "node": "=15.9.0",
-    "pnpm": "=5.17.2"
+    "node": "=15.10.0",
+    "pnpm": "=5.18.0"
   },
   "engineStrict": true,
   "volta": {
-    "node": "15.9.0"
+    "node": "15.10.0"
   },
   "main": "cli.mjs",
   "type": "module",

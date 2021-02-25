@@ -8,18 +8,21 @@ import {
 import {
   build,
 } from './build.mjs';
+import {
+  debuglog,
+} from '../../helpers/debuglog.mjs';
 
 const packageCommands = {};
 
-export const buildPackageCommand = (packageName = null, debuglog = null) => {
+export const buildPackageCommand = (packageName = null) => {
   debuglog('buildPackageCommand:', packageName);
 
   if (Object.keys(packageCommands).includes(packageName) === false) {
     packageCommands[packageName] = new Command(packageName);
     (packageCommands[packageName])
       .description(chalk`manage {green ${packageName}} package`)
-      .addCommand(versions(packageName, debuglog))
-      .addCommand(build(packageName, debuglog));
+      .addCommand(versions(packageName))
+      .addCommand(build(packageName));
   }
 
   return packageCommands[packageName];
