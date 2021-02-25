@@ -3,12 +3,12 @@
   "version": "0.0.0",
   "description": "[lib] shared stuff",
   "engines": {
-    "node": "=15.9.0",
-    "pnpm": "=5.17.2"
+    "node": "=15.10.0",
+    "pnpm": "=5.18.0"
   },
   "engineStrict": true,
   "volta": {
-    "node": "15.9.0"
+    "node": "15.10.0"
   },
   "type": "module",
   "scripts": {
@@ -21,7 +21,9 @@
   ],
   "author": "Dmitry N. Medvedev <dmitry.medvedev@gmail.com>",
   "license": "MIT",
-  "dependencies": {},
+  "dependencies": {
+    "@deneb-kaitos/node": "link:"
+  },
   "devDependencies": {
     "c8": "^7.4.0",
     "chai": "^4.2.0",

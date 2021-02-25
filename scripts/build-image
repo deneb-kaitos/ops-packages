@@ -1,0 +1,46 @@
+#!/bin/bash
+
+IMAGE_NAME=kaufmann-web
+USER_ID=builder
+
+cp /Users/dmitrymedvedev/.ops/local_packages/node_v15.10.0.tar.gz ./tests/node/front-end/
+
+docker build \
+  --build-arg user_id=$USER_ID \
+  --build-arg node_version=15.10.0 \
+  --build-arg package_name=node_v15.10.0 \
+  --build-arg nanos_package=./node_v15.10.0.tar.gz \
+  --build-arg image_name=$IMAGE_NAME \
+  --build-arg image_config=./tests/node/front-end/image-config.json \
+  --build-arg npmrc=./.npmrc \
+  --build-arg pnpm_workspace=./tests/node/front-end/pnpm-workspace.yaml \
+  --tag kaufmann-web \
+  --file ./nanos-package-builder/configs/nodejs/docker/build-image.Dockerfile \
+  ./tests/node/front-end
+
+CONTAINER_ID=$(docker create $IMAGE_NAME)
+docker cp $CONTAINER_ID:/home/$USER_ID/.ops/images/$IMAGE_NAME.img - > $IMAGE_NAME.img
+docker rm -v $CONTAINER_ID > /dev/null 2>&1
+
+mv $IMAGE_NAME.img ~/.ops/images/
+
+rm -f ./tests/node/front-end/node_v15.10.0.tar.gz
+
+# ops instance create sapper.img --imagename sapper --port 3000 --target-cloud onprem --show-debug --show-errors --show-warnings
+# ops instance list
+
+# ops pkg load node_v15.10.0 --config ./image-config.json --accel=false --local --show-debug --show-errors --force --imagename kaufmann-web
+# ops instance delete kaufmann-web
+
+# ops instance create kaufmann-web --config ./tests/node/front-end/image-config.json --imagename kaufmann-web
+
+# ops image create \
+#   --config ./tests/node/no-dependencies/config.json \
+#   --local \
+#   --package node_v15.10.0 \
+#   --imagename sapper \
+#   --target-cloud onprem
+
+# ops pkg load node_v15.10.0 --local --accel=false --imagename=kaufmann-web --args="./tests/node/front-end/project-sources/server.mjs"
+
+# ops pkg load --local node_v15.10.0 --accel=false --args project-sources/server.mjs --verbose --force --gateway 192.168.2.1 --imagename kaufmann-web --port 3000 --trace --verbose

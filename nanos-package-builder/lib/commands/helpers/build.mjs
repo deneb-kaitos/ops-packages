@@ -24,7 +24,9 @@ const buildPackage = async ({
   debuglog(message);
   log(message);
 
-  const { build } = (await import(`../../builders/${packageName}/build.mjs`));
+  const {
+    build,
+  } = (await import(`../../builders/package.builders/${packageName}/build.mjs`));
 
   // eslint-disable-next-line no-return-await
   return await build(version, outputDirectory, install);

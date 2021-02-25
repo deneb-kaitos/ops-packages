@@ -45,7 +45,7 @@ const listPackageVersions = async (packageName) => {
 
 // ./cli.mjs pkg nodejs versions
 
-// ./cli.mjs pkg nodejs build v15.9.0
+// ./cli.mjs pkg nodejs build v15.10.0
 
 export const versions = (packageName = null) => {
   if (command === null) {

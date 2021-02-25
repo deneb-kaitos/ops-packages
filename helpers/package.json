@@ -5,6 +5,7 @@
   "license": "MIT",
   "type": "module",
   "dependencies": {
+    "@deneb-kaitos/ops-packages-helpers": "link:",
     "commander": "^7.1.0"
   },
   "devDependencies": {

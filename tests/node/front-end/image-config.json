@@ -1,0 +1,42 @@
+{
+  "Dirs": [
+    "."
+  ],
+  "Args": [
+    "project-sources/server.mjs"
+  ],
+  "Env": {
+    "Environment": "development",
+    "NODE_DEBUG": "*",
+    "NODE_DEBUG_NATIVE": "*"
+  },
+  "CloudConfig": {
+    "Platform": "onprem"
+  },
+  "Debugflags": [
+    "trace",
+    "debugsyscalls",
+    "futex_trace",
+    "fault"
+  ],
+  "NameServer": "8.8.8.8",
+  "RebootOnExit": true,
+  "RunConfig": {
+    "Accel": false,
+    "BaseName": "kaufmann-web",
+    "Bridged": false,
+    "CPUs": 1,
+    "Debug": true,
+    "Gateway": "192.168.2.1",
+    "InstanceName": "kaufmann-web",
+    "Memory": "100M",
+    "OnPrem": true,
+    "Ports": [
+      "3000"
+    ],
+    "ShowDebug": true,
+    "ShowErrors": true,
+    "ShowWarnings": true,
+    "Verbose": true
+  }
+}
